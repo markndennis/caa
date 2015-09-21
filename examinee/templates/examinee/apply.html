@@ -1,0 +1,135 @@
+{% extends "base_generic.html" %} {% block content %} 
+
+<div class="row">
+    <div class="col-md-8">
+        <p>Please carefully read the following before you apply for the exam:</p>
+        <ul>
+            <li>Carefully read the Safety Program Examination Guide and familiarize yourself with the exam request and procedures.</li>
+            <li>You must contact the Invigilation Centre to make an appointment, confirm the time required, and discuss applicable fees.</li>
+            <li>If you do not live within 200 km of an Approved Invigilator, you may propose a new invigilator; however, your request must be submitted a minimum of 60 days prior to your intended exam write date.</li>
+            <li>CTCMA Safety Program Examinations are only available to applicants who are CTCMA registrants (including student registrants) and exam candidates.</li>
+            <li>Only money order or certified cheque made payable to CTCMA is accepted. No refund or exchange.</li>
+            <li>Duplication or sharing content of assessments to others in any manner is strictly prohibited.</li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <form class="form-horizontal" action="{% url 'examinee:application' %}" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Apply for Exam:</legend>
+            <div class="form-group">
+                <div class="col-md-2">
+                    <label for="invigid"><b>Select Invigilator:</b>
+                    </label>
+                </div>
+                <div class="col-md-10">
+                    <select name="invigid" id="invigid" style="width:300px">
+                        {% for invig in invig_list %}
+                        <option value='{{invig.pk}}'>{{invig.first_name}} {{invig.last_name}} - {{invig.institution}} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-2">
+                    <label for="exam"><b>Select Exam:</b>
+                    </label>
+                </div>
+                <div class="col-md-10">
+                    <select name="exam" id="exam">
+                        {% for exam in exam_types %}
+                        <option value='{{exam.pk}}'>{{exam.exam_type}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-2">
+                    <label for="fname"><b>First Name:</b>
+                </div>
+                </label>
+                <div class="col-md-10">
+                    <input type="text" name="fname" id="fname" placeholder="First Name" value="" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-2">
+                    <label for="lname"><b>Last Name:</b>
+                    </label>
+                </div>
+                <div class="col-md-10">
+                    <input type="text" name="lname" id="lname" placeholder="Last Name" value="" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-2">
+                    <label for="regnum"><b>Registration # <br/> if applicable (ie.FA01234):</b>
+                    </label>
+                </div>
+                <div class="col-md-10">
+                    <input type="text" name="regnum" id="regnum" placeholder="Registration Number" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-2">
+                    <label for="email"><b>Email:</b>
+                    </label>
+                </div>
+                <div class="col-md-10">
+                    <input type="text" name="email" id="email" placeholder="Email" value="" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-2">
+                    <label for="dob"><b>Date of Birth<br>(YYYY-MM-DD):</b>
+                    </label>
+                </div>
+                <div class="col-md-10">
+                    <input type="text" name="dob" class="input-small dp" id="dob" value='1960-01-01' required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-2">
+                    <label for="examdate"><b>Intended Exam Date<br>(YYYY-MM-DD):</b>
+                    </label>
+                </div>
+                <div class="col-md-10">
+                    <input type="text" name="examdate" class="input-small" id="examdate" value="{{intend_date}}" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <input type="checkbox" id="agree" name="agree" value="agree" required> I declare that I have read the above and all the information provided above are true, complete, and correct.
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <button type="submit" class="btn btn-success">Apply for Exam</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+<script>
+
+  $(function() {
+    $( "#dob" ).datepicker({
+      changeYear: true,
+      changeMonth: true,
+      dateFormat: "yy-mm-dd",
+      yearRange: "1930:2000",
+    });
+    $( "#examdate" ).datepicker({
+      dateFormat: "yy-mm-dd",
+    });
+  });
+  
+  </script>
+{% endblock content %}

@@ -1,0 +1,150 @@
+{% extends "base_exam.html" %} {% block content %} {% autoescape off %}
+
+<div class="row">
+    <div class="col-md-2" style="height=300px">
+        <div class='thumbnail' style="background:#ffffcc;">
+            <strong>Time Remaining:</strong>
+            <div id="mins"></div>
+            <div id="secs"></div>
+        </div>
+        <div id="warning" class="bg-danger" style="text-align:center;"></div>
+
+    </div>
+   <div class="col-md-2"><p class="lead">Question: {{num}} ({{ques.qnum}})</p></div>
+   <form action="{% url 'exams:postanswer' %}" method="post">
+    {% csrf_token %}
+    <div class="col-md-4">
+        
+        <div id='qtext' class=""> {{ques.qtext}}</div>
+        <hr>
+        <div class="radio">
+            <label>
+                <input type="radio" name="response" id="A" value="A"> {{ques.r1}}
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="response" id="B" value="B"> {{ques.r2}}
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="response" id="C" value="C"> {{ques.r3}}
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="response" id="D" value="D"> {{ques.r4}}
+            </label>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div id='qtext_c' class="" style="height:150px"> {{ques.qtext_c}}</div>
+        <hr>
+        <div class="radio">
+            <label>
+                <input type="radio" name="response_c" id="A_c" value="A"> {{ques.r1_c}}
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="response_c" id="B_c" value="B"> {{ques.r2_c}}
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="response_c" id="C_c" value="C"> {{ques.r3_c}}
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="response_c" id="D_c" value="D"> {{ques.r4_c}}
+            </label>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6"></div>
+    <div class="col-md-6">
+        <input type='submit' id='back'  name="submit" class="btn btn-success" value="back">&nbsp;
+        <input type='submit' id='formard' name="submit" class="btn btn-success" value="forward">
+    </div>
+</div>
+</form>
+
+{% endautoescape %}
+<script>
+    var t = 3600;
+    var m = 0;
+    var s = 0;
+
+    setInterval(timedisplay, 1000);
+
+    function timedisplay() {
+        //alert('timer');
+        t = t - 1;
+        // $('#test').html(t);
+        m = Math.floor(t / 60);
+        s = t % 60;
+
+        if (m < 5) {
+            $('#warning').html("low time warning!");
+        }
+
+        if (m <= 0 && s <= 0) {
+            m = 0;
+            s = 0;
+            location.reload();
+        };
+
+        //alert('s is ' + s);
+        $('#mins').html(m + ' Mins');
+        $('#secs').html(s + ' Secs');
+
+
+    };
+
+    //alert($maxqnum);
+    var qnum = {{ques.qnum}};
+    //var $maxqnum = 45;
+
+    // set height of english and chinese question text divs to be equal
+    $qtext_height = $("#qtext").height();
+    $("#qtext_c").height($qtext_height);
+
+    //check radio button for english and chinese 
+    $("input[name='response']").click(function() {
+        resp = $("input[name='response']:checked").val();
+        //alert(resp);
+        //$("input:radio").prop("checked", false);
+        $('#' + resp + '_c').prop("checked", true);
+        //alert("clicked" + resp)
+    });
+
+    //check radio button for english and chinese 
+    $("input[name='response_c']").click(function() {
+        resp1 = $("input[name='response_c']:checked").val();
+        //alert(resp1);
+        //$("input:radio").prop("checked", false);
+        $('#' + resp1).prop("checked", true);
+        //alert("clicked" + resp)
+    });
+
+
+    // forward and back button controls
+    // $('#back').click(function() {
+
+    //     qnum--;
+
+    //     window.location = "../" + qnum;
+    // });
+
+    // $('#forward').click(function() {
+
+    //     qnum++;
+
+    //     window.location = "../" + qnum;
+    // });
+
+</script>
+
+{% endblock content %}

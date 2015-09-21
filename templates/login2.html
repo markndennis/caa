@@ -1,0 +1,62 @@
+{% extends "base_generic.html" %} {% block content %}
+
+<!--{{ form.as_p }}-->
+
+<form class="form-horizontal" action="{% url 'authuser' %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend>Please Login:</legend>
+        <div class="form-group">
+            <div class="col-md-2">
+                {{ form.first_name.label_tag }}
+            </div>
+            <div class="col-md-4">
+                {{ form.first_name }}
+            </div>
+            <div class="col-md-6 text-warning">
+                {{ form.first_name.errors }}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2">
+                {{ form.last_name.label_tag }}
+            </div>
+            <div class="col-md-4">
+                {{ form.last_name }}
+            </div>
+            <div class="col-md-6 text-warning">
+                {{ form.last_name.errors }}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2">
+                {{ form.password.label_tag }}
+            </div>
+            <div class="col-md-4">
+                {{ form.password }}
+            </div>
+            <div class="col-md-6 text-warning">
+                {{ form.password.errors }}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-4">
+                <input type="submit" value="Submit" />
+            </div>
+            <div class="col-md-6 text-warning">
+                {{ form.non_field_errors }}
+            </div>
+        </div>
+    </fieldset>
+</form>
+
+<!--{% if form.errors %}-->
+<!--<div class="col-md-1"></div>-->
+<!--<div class="col-md-8">-->
+<!--    <p style="color:red">Please correct identified errors and try again.</p>-->
+<!--</div>-->
+<!--{% endif %}-->
+
+{% endblock content %}

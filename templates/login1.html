@@ -1,0 +1,52 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<div class="row">
+    <form class="form-horizontal" action="{% url 'loginpost' %}" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Please login with the following information:</legend>
+            <div class="form-group">
+                <div class="col-md-2">
+                    <label for="fname"><b>First Name:</b>
+                </div>
+                </label>
+                <div class="col-md-10">
+                    <input type="text" name="fname" id="fname" placeholder="First Name" value="" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-2">
+                    <label for="lname"><b>Last Name:</b>
+                    </label>
+                </div>
+                <div class="col-md-10">
+                    <input type="text" name="lname" id="lname" placeholder="Last Name" value="" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-2">
+                    <label for="pword"><b>Password:</b>
+                    </label>
+                </div>
+                <div class="col-md-10">
+                    <input type="text" name="pword" id="pword" placeholder="Password" value="">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <button type="submit" class="btn btn-success">Apply for Exam</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<br/>
+
+{% if form.errors %}
+<p style="color:red">Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% endblock content %}

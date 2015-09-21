@@ -1,0 +1,8 @@
+PHPMyAdmin Installation complete. You can log in at: https://caa-markndennis.c9.io/phpmyadmin with the following username (and blank password):
+
+       Username: markndennis
+
+also note you cannot run phpmyadmin and django at the same time both require port 8080 therefore you have to stop one to start
+the other.  It easy to stop django as there is a stop button provided on the console.  To stop apache (phpmyadmin) try
+sudo service apache2 stop
+
